@@ -1,0 +1,79 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% load static %}
+
+
+    <div class="page-header">
+            
+        <h1><a href="/">Bienvenue à notre équipe</a></h1>
+    </div>
+    <br>
+    <div class="container">
+        <header class="page-header ">
+            <h1><a href="/">Les joueurs</a></h1>
+            
+
+        </header>
+        <br>
+        <main class="row d-flex flex-row">
+            {% for character in characters %}
+            <div class="col border-0">
+                <div class="card">
+                    
+                    <h2><a href="{% url 'character_detail' id_character=character.id_character %}">{{ character.id_character }}</a></h2>
+                    
+                    {% if character.photo %}
+                        <img src="{% static 'assets/'|add:character.photo %}.jpg" alt="{{ character.id_character }} photo" style="width: 100px; height: 100px;">
+                    {% endif %}
+                    
+                    
+                    <p>Etat: {{ character.etat }}</p>
+                    <p>Lieu: {{ character.lieu }}</p>
+                </div>
+            </div>
+        {% endfor %}  
+        </main>
+        <br>
+        <header class="page-header equipment-header">
+            <h1><a href="/">Equipements</a></h1>
+        </header>
+        <br>
+        <main class="row d-flex flex-row">
+            {% for equipement in equipements %}
+                <div class="col border-0">
+                    <div class="card">
+                        <h2><a href="">{{ equipement.id_equip }}</a></h2>
+                        {% if equipement.photo %}
+                            <img src="{% static 'assets/'|add:equipement.photo %}.jpg" alt="{{ equipement.id_equip }} photo" style="width: 100px; height: 100px;">
+                        {% endif %}
+                        <p>Disponibilité: {{ equipement.disponibilite }}</p>
+                        {% if equipement.disponibilite == "occupé" %}
+                            {% for character in characters %}
+                                {% if character.lieu == equipement %}
+                                    <p>Occupé par: {{ character.id_character }}</p>
+                                {% endif %}
+                                
+                            {% endfor %}
+                        {% endif %}
+                        {% if equipement.disponibilite == "libre" %}
+                            {% if equipement.id_equip == "Terrain de foot" %} 
+                                {% for character in characters %}
+                                    {% if character.lieu == equipement %}
+                                        <p>Occupé par: {{ character.id_character }}</p>
+                                    {% endif %}
+                            
+                                {% endfor %}
+                            {% endif %}
+                        {%endif%}
+                    </div>
+                </div>
+            {% endfor %}
+        </main>
+    </div>
+
+
+{% endblock %}
+    
+    
+    
+
