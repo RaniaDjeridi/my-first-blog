@@ -3,6 +3,9 @@
 {% load static %}
 
 
+
+
+
     <div class="page-header">
             
         <h1><a href="/">Bienvenue à notre équipe</a></h1>
@@ -27,8 +30,8 @@
                     {% endif %}
                     
                     
-                    <p>Etat: {{ character.etat }}</p>
-                    <p>Lieu: {{ character.lieu }}</p>
+                    <p><strong>Etat:</strong> {{ character.etat }}</p>
+                    <p><strong>Lieu:</strong> {{ character.lieu }}</p>
                 </div>
             </div>
         {% endfor %}  
@@ -42,15 +45,16 @@
             {% for equipement in equipements %}
                 <div class="col border-0">
                     <div class="card">
-                        <h2><a href="">{{ equipement.id_equip }}</a></h2>
+                        <h2><a href="{% url 'equipement_detail' id_equip=equipement.id_equip %}">{{ equipement.id_equip }}</a></h2>
+
                         {% if equipement.photo %}
                             <img src="{% static 'assets/'|add:equipement.photo %}.jpg" alt="{{ equipement.id_equip }} photo" style="width: 100px; height: 100px;">
                         {% endif %}
-                        <p>Disponibilité: {{ equipement.disponibilite }}</p>
+                        <p><strong>Disponibilité:</strong> {{ equipement.disponibilite }}</p>
                         {% if equipement.disponibilite == "occupé" %}
                             {% for character in characters %}
                                 {% if character.lieu == equipement %}
-                                    <p>Occupé par: {{ character.id_character }}</p>
+                                    <p><strong>Occupé par:</strong>{{ character.id_character }}</p>
                                 {% endif %}
                                 
                             {% endfor %}
@@ -59,7 +63,7 @@
                             {% if equipement.id_equip == "Terrain de foot" %} 
                                 {% for character in characters %}
                                     {% if character.lieu == equipement %}
-                                        <p>Occupé par: {{ character.id_character }}</p>
+                                        <p><strong>Occupé par:</strong> {{ character.id_character }}</p>
                                     {% endif %}
                             
                                 {% endfor %}

@@ -1,0 +1,70 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+<main class="row d-flex flex-row">
+<div class="col border-0">
+    <div class="card">
+        
+        <h2><a href="">{{ equipement.id_equip }}</a></h2>
+        
+        {% if equipement.photo %}
+            <img src="{% static 'assets/'|add:equipement.photo %}.jpg" alt="{{ equipement.id_equip }} photo" style="width: 200px; height: 200px;">
+        {% endif %}
+        <p><strong>Description:</strong> {{ equipement.description }}</p>
+        <p><strong>Disponibilité:</strong> {% if equipement.disponibilite == "libre" %}
+            <span class="availability text-success">Libre</span>
+        {% elif equipement.disponibilite == "occupé" %}
+            <span class="availability occupied text-danger">Occupé {{ equipement.character.id_character }}</span>
+        {% else %}
+            {{ equipement.disponibilite }}
+        {% endif %}</p>
+        {% if equipement.disponibilite == "occupé" %}
+        {% for character in characters %}
+        {% if character.lieu == equipement %}
+            <div class="card">
+            <p><strong>Occupé par:</strong>{{ character.id_character }}</p>
+            {% if character.photo %}
+            <img src="{% static 'assets/'|add:character.photo %}.jpg" alt="{{ character.id_character }} photo" style="width: 100px; height: 100px;">
+            {% endif %}
+            </div>
+        {% endif %}
+        
+        {% endfor %}
+        {% endif %}
+        {% if equipement.disponibilite == "libre" %}
+        {% if equipement.id_equip == "Terrain de foot" %} 
+        <div class="container">
+        <main class="row d-flex flex-row">
+        {% for character in characters %}
+
+            {% if character.lieu == equipement %}
+           
+            
+                <div class="col border-0">
+                <div class="card">
+                <p><strong>Occupé par:</strong> {{ character.id_character }}</p>
+                {% if character.photo %}
+                <img src="{% static 'assets/'|add:character.photo %}.jpg" alt="{{ character.id_character }} photo" style="width: 100px; height: 100px;">
+                {% endif %}
+                </div>
+                </div>
+                {% endif %}
+    
+                {% endfor %}  
+        </main>
+        </div>
+        </div>
+
+       
+        {% endif %}
+        {%endif%}
+
+
+        
+    </div>
+</div>
+    
+</main>
+</div>
+{% endblock %}

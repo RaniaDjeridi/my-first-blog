@@ -63,3 +63,20 @@ def refresh_etats (character,lieu):
         character.etat = 'endormi'
     character.save()
     pass
+def equipement_detail(request, id_equip):
+    equipement = get_object_or_404(Equipement, id_equip=id_equip)
+    characters=Character.objects.all()
+    return render(request, 'blog/equipement_detail.html', {'equipement': equipement,'characters': characters})
+
+def characters_list(request):
+    characters = Character.objects.all()
+    return render(request, 'blog/characters_list.html', {'characters': characters})
+
+def equipements_list(request):
+    equipements = Equipement.objects.all()
+    return render(request, 'blog/equipements_list.html', {'equipements': equipements})
+def base(request):
+    equipements = Equipement.objects.all()
+    characters=Character.objects.all()
+    return render(request, 'blog/base.html', {'equipements': equipements, 'characters': characters})
+  

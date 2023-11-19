@@ -1,15 +1,31 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block content %}
-<div class="page-header">
-    <h1>
-        <a href="/">{{ character.id_character }}</a>
-    </h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        <b> Changer : </b> {{ form.as_ul }}
-        <button type="submit" class="btn btn-outline-light">OK</button>
-        <a href="{% url 'character_list' %}">Back</a>
-    </form>
+<div class="container">
+<main class="row d-flex flex-row">
+<div class="col border-0">
+    <div class="card">
+        
+        <h2><a href="">{{ character.id_character }}</a></h2>
+        
+        {% if character.photo %}
+            <img src="{% static 'assets/'|add:character.photo %}.jpg" alt="{{ character.id_character }} photo" style="width: 100px; height: 100px;">
+        {% endif %}
+        
+        
+        <p><strong>Etat:</strong> {{ character.etat }}</p>
+        <p><strong>Description:</strong> {{ character.description }}</p>
+
+        <p><strong>Lieu:</strong> {{ character.lieu }}</p>
+        <form method="POST" class="post-form">{% csrf_token %}
+            <b> Changer : </b> {{ form.as_ul }}
+            <button type="submit" class="btn btn-success">OK</button>
+            <a href="{% url 'character_list' %}">Back</a>
+        </form>
+    </div>
+</div>
+    
+</main>
 </div>
 {% if form.is_valid %}
         {% if error %}

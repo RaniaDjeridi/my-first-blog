@@ -62,7 +62,7 @@ h4 {
     float: right;
 }
  
-.btn-default,
+.btn-default, 
 .btn-default:visited {
     color: #C25100;
     background: none;
@@ -70,8 +70,8 @@ h4 {
 }
  
 .btn-default:hover {
-    color: #FFFFFF;
-    background-color: #C25100;
+    color: rgb(236, 26, 26);
+    background-color: #dd6c1b;
 }
 .card {
     border: 1px solid orange; /* Bordure orange */

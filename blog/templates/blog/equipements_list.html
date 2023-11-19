@@ -1,0 +1,40 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<header class="page-header equipment-header">
+    <h1><a href="/">Equipements</a></h1>
+</header>
+<br>
+<main class="row d-flex flex-row">
+    {% for equipement in equipements %}
+        <div class="col border-0">
+            <div class="card">
+                <h2><a href="{% url 'equipement_detail' id_equip=equipement.id_equip %}">{{ equipement.id_equip }}</a></h2>
+
+                {% if equipement.photo %}
+                    <img src="{% static 'assets/'|add:equipement.photo %}.jpg" alt="{{ equipement.id_equip }} photo" style="width: 100px; height: 100px;">
+                {% endif %}
+                <p><strong>Disponibilité:</strong> {{ equipement.disponibilite }}</p>
+                {% if equipement.disponibilite == "occupé" %}
+                    {% for character in characters %}
+                        {% if character.lieu == equipement %}
+                            <p><strong></strong>{{ character.id_character }}</p>
+                        {% endif %}
+                        
+                    {% endfor %}
+                {% endif %}
+                {% if equipement.disponibilite == "libre" %}
+                    {% if equipement.id_equip == "Terrain de foot" %} 
+                        {% for character in characters %}
+                            {% if character.lieu == equipement %}
+                                <p><strong>Occupé par:</strong> {{ character.id_character }}</p>
+                            {% endif %}
+                    
+                        {% endfor %}
+                    {% endif %}
+                {%endif%}
+            </div>
+        </div>
+    {% endfor %}
+    </main>
+    {% endblock %}
